@@ -1,9 +1,5 @@
 package boardgame;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-import chess.ChessPosition;
 
 public class Board {
 
