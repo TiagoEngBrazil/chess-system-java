@@ -8,6 +8,7 @@ import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Rook;
 
 public class ChessMatch {
@@ -118,10 +119,10 @@ public class ChessMatch {
 	}
 
 	private Piece makeMove(Position source, Position target) {
-		ChessPiece p = (ChessPiece)board.removePiece(source);
-		
+		ChessPiece p = (ChessPiece) board.removePiece(source);
+
 		p.increaseMovrCount();
-		
+
 		Piece capturedPiece = board.removePiece(target);
 
 		board.placePiece(p, target);
@@ -136,10 +137,10 @@ public class ChessMatch {
 	}
 
 	private void undoMove(Position source, Position target, Piece capturedPiece) {
-		ChessPiece p = (ChessPiece)board.removePiece(target);
-		
+		ChessPiece p = (ChessPiece) board.removePiece(target);
+
 		p.decreaseMovrCount();
-		
+
 		board.placePiece(p, source);
 
 		if (capturedPiece != null) {
@@ -181,10 +182,11 @@ public class ChessMatch {
 	}
 
 	private ChessPiece king(Color color) {
-		List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+		List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == color)
+				.collect(Collectors.toList());
 		for (Piece p : list) {
 			if (p instanceof King) {
-				return (ChessPiece)p;
+				return (ChessPiece) p;
 			}
 		}
 		throw new IllegalStateException("There is no " + color + " king on the board");
@@ -192,7 +194,8 @@ public class ChessMatch {
 
 	private boolean testCheck(Color color) {
 		Position kingPosition = king(color).getChessPosition().toPosition();
-		List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
+		List<Piece> opponentPieces = piecesOnTheBoard.stream()
+				.filter(x -> ((ChessPiece) x).getColor() == opponent(color)).collect(Collectors.toList());
 		for (Piece p : opponentPieces) {
 			boolean[][] mat = p.possibleMoves();
 			if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
@@ -216,7 +219,7 @@ public class ChessMatch {
 			for (int i = 0; i < board.getRows(); i++) {
 				for (int j = 0; j < board.getColumns(); j++) {
 					if (mat[i][j]) {
-						
+
 						Position source = ((ChessPiece) p).getChessPosition().toPosition();
 
 						Position target = new Position(i, j);
@@ -244,15 +247,29 @@ public class ChessMatch {
 	}
 
 	private void inicialSetup() {
-		placeNewPiece('h', 7, new Rook(board, Color.WHITHE));
-		placeNewPiece('d', 1, new Rook(board, Color.WHITHE));
+		placeNewPiece('a', 1, new Rook(board, Color.WHITHE));
 		placeNewPiece('e', 1, new King(board, Color.WHITHE));
+		placeNewPiece('h', 1, new Rook(board, Color.WHITHE));
+		placeNewPiece('a', 2, new Pawn(board, Color.WHITHE));
+		placeNewPiece('b', 2, new Pawn(board, Color.WHITHE));
+		placeNewPiece('c', 2, new Pawn(board, Color.WHITHE));
+		placeNewPiece('d', 2, new Pawn(board, Color.WHITHE));
+		placeNewPiece('e', 2, new Pawn(board, Color.WHITHE));
+		placeNewPiece('f', 2, new Pawn(board, Color.WHITHE));
+		placeNewPiece('g', 2, new Pawn(board, Color.WHITHE));
+		placeNewPiece('h', 2, new Pawn(board, Color.WHITHE));
 
-		placeNewPiece('b', 8, new Rook(board, Color.BLACK));
-		placeNewPiece('a', 8, new King(board, Color.BLACK));
-
-		System.out.println("White King position: " + new ChessPosition('e', 1).toPosition());
-		System.out.println("Black King position: " + new ChessPosition('a', 8).toPosition());
+		placeNewPiece('a', 8, new Rook(board, Color.BLACK));
+		placeNewPiece('e', 8, new King(board, Color.BLACK));
+		placeNewPiece('h', 8, new Rook(board, Color.BLACK));
+		placeNewPiece('a', 7, new Pawn(board, Color.BLACK));
+		placeNewPiece('b', 7, new Pawn(board, Color.BLACK));
+		placeNewPiece('c', 7, new Pawn(board, Color.BLACK));
+		placeNewPiece('d', 7, new Pawn(board, Color.BLACK));
+		placeNewPiece('e', 7, new Pawn(board, Color.BLACK));
+		placeNewPiece('f', 7, new Pawn(board, Color.BLACK));
+		placeNewPiece('g', 7, new Pawn(board, Color.BLACK));
+		placeNewPiece('h', 7, new Pawn(board, Color.BLACK));
 	}
 
 	public static void main(String[] args) {

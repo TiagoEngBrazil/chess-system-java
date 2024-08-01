@@ -21,12 +21,12 @@ public abstract class ChessPiece extends Piece {
 	
 	public void increaseMovrCount() {
 		
-		moveCount++;
+		setMoveCount(getMoveCount() + 1);
 	}
 	
 	public void decreaseMovrCount() {
 		
-		moveCount--;
+		setMoveCount(getMoveCount() - 1);
 	}
 	
 	public ChessPosition getChessPosition() {
@@ -40,5 +40,13 @@ public abstract class ChessPiece extends Piece {
 		return p != null && p.getColor() != color;
  		
 		
+	}
+
+	public int getMoveCount() {
+		return moveCount;
+	}
+
+	public void setMoveCount(int moveCount) {
+		this.moveCount = moveCount;
 	}
 }
