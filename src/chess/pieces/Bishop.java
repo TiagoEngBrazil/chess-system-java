@@ -7,86 +7,61 @@ import chess.Color;
 
 public class Bishop extends ChessPiece {
 
-	public Bishop(Board board, Color color) {
-		super(board, color);
-		// TODO Auto-generated constructor stub
-	}
+    public Bishop(Board board, Color color) {
+        super(board, color);
+    }
 
-	@Override
-	public String toString() {
-		return "B";
-	}
+    @Override
+    public String toString() {
+        return "B";
+    }
 
-	@Override
-	public boolean[][] possibleMoves() {
+    @Override
+    public boolean[][] possibleMoves() {
+        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
-		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        Position p = new Position(0, 0);
 
-		Position p = new Position(0, 0);
+        // nw (north-west)
+        p.setValues(position.getRow() - 1, position.getColumn() - 1);
+        while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setValues(p.getRow() - 1, p.getColumn() - 1);
+        }
+        if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
 
-		// nm
+        // ne (north-east)
+        p.setValues(position.getRow() - 1, position.getColumn() + 1);
+        while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setValues(p.getRow() - 1, p.getColumn() + 1);
+        }
+        if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
 
-		p.setValues(position.getRow() - 1, position.getColumn()- 1);
+        // se (south-east)
+        p.setValues(position.getRow() + 1, position.getColumn() + 1);
+        while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setValues(p.getRow() + 1, p.getColumn() + 1);
+        }
+        if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
 
-		while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-			mat[p.getRow()][p.getColumn()] = true;
+        // sw (south-west)
+        p.setValues(position.getRow() + 1, position.getColumn() - 1);
+        while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setValues(p.getRow() + 1, p.getColumn() - 1);
+        }
+        if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
 
-			p.setValues(p.getRow() -1 , p.getColumn() -1);;
-		}
-
-		if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-			mat[p.getRow()][p.getColumn()] = true;
-
-		}
-
-		// ne
-
-		p.setValues(position.getRow() - 1, position.getColumn() + 1);
-
-		while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-			mat[p.getRow()][p.getColumn()] = true;
-
-			p.setValues(p.getRow() - 1, p.getColumn() + 1);;
-		}
-
-		if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-			mat[p.getRow()][p.getColumn()] = true;
-
-		}
-
-		// se
-
-				p.setValues(position.getRow() + 1, position.getColumn() + 1);
-
-				while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-
-					p.setValues(p.getRow() + 1, p.getColumn() + 1);
-				}
-
-				if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-
-				}
-		
-		// sw
-
-				p.setValues(position.getRow() + 1, position.getColumn() - 1);
-
-				while (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-
-					p.setValues(p.getRow() + 1, getMoveCount() -1);;
-				}
-
-				if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
-					mat[p.getRow()][p.getColumn()] = true;
-
-				}
-				
-		return mat;
-	}
-	
-	
-
+        return mat;
+    }
 }

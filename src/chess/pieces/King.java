@@ -119,7 +119,7 @@ public class King extends ChessPiece {
 				
 				if (getBoard().piece(p1) == null && getBoard().piece(p2) == null) {
 					
-					mat[position.getRow()][position.getColumn() + 3] = true;
+					mat[position.getRow()][position.getColumn() + 2] = true;
 					
 				}
 				
