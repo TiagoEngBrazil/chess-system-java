@@ -102,7 +102,7 @@ public class UI {
 		if (piece == null) {
 			System.out.print("-" + ANSI_RESET);
 		} else {
-			if (piece.getColor() == Color.WHITHE) {
+			if (piece.getColor() == Color.WHITE) {
 				System.out.print(ANSI_WHITE + piece + ANSI_RESET);
 			} else {
 				System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
@@ -112,7 +112,7 @@ public class UI {
 	}
 
 	private static void printCapturedPieces(List<ChessPiece> captured) {
-		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITHE)
+		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE)
 				.collect(Collectors.toList());
 		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK)
 				.collect(Collectors.toList());
