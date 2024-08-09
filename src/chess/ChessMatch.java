@@ -23,6 +23,8 @@ public class ChessMatch {
 	private Board board;
 
 	private ChessPiece enPassantVulnerable;
+	
+	private ChessPiece promoted;
 
 	private List<Piece> piecesOnTheBoard = new ArrayList<>();
 
@@ -76,6 +78,10 @@ public class ChessMatch {
 		return mat;
 	}
 
+	public ChessPiece getPromoted() {
+		return promoted;
+	}
+
 	public boolean[][] possibleMoves(ChessPosition sourcePosition) {
 
 		Position position = sourcePosition.toPosition();
@@ -101,6 +107,21 @@ public class ChessMatch {
 		}
 
 		ChessPiece movedPiece = (ChessPiece) board.piece(target);
+		
+		// special move promotion
+		
+		promoted = null;
+		
+		if (movedPiece instanceof Pawn) {
+			if ((movedPiece.getColor() == Color.WHITE && target.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+				
+				promoted = (ChessPiece)board.piece(target);
+				
+				promoted = replacePromotedPiece("Q");
+				
+			}
+			
+		}
 
 		check = (testCheck(opponent(currentPlayer))) ? true : false;
 
@@ -133,6 +154,46 @@ public class ChessMatch {
 
 	public ChessPiece getEnPassantVulnerable() {
 		return enPassantVulnerable;
+	}
+	
+	public ChessPiece replacePromotedPiece(String type) {
+		if (promoted == null) {
+			System.out.println("Error: There is no piece to be promoted!");
+	        return null;
+		}
+
+		if (!type.equalsIgnoreCase("B") && !type.equalsIgnoreCase("N") && !type.equalsIgnoreCase("R") && !type.equalsIgnoreCase("Q")) {
+			System.out.println("Error: Invalid type for promotion!");
+	        return null;
+		}
+		
+		Position pos = promoted.getChessPosition().toPosition();
+		
+		Piece p = board.removePiece(pos);
+		
+		piecesOnTheBoard.remove(p);
+		
+		ChessPiece newPiece = newPiece(type, promoted.getColor());
+		
+		board.placePiece(newPiece, pos);
+		
+		piecesOnTheBoard.add(newPiece);
+		
+		return newPiece;
+		
+	}
+	
+	private ChessPiece newPiece(String type, Color color) {
+		if (type.equalsIgnoreCase("B")) return new Bishop(board, color);
+		
+		if (type.equalsIgnoreCase("N")) return new Knight(board, color);
+		
+		if (type.equalsIgnoreCase("Q")) return new Queen(board, color);
+		
+		if (type.equalsIgnoreCase("R")) return new Rook(board, color);
+		
+		
+		return null;
 	}
 
 	private Piece makeMove(Position source, Position target) {
