@@ -163,8 +163,7 @@ public class ChessMatch {
 		}
 
 		if (!type.equalsIgnoreCase("B") && !type.equalsIgnoreCase("N") && !type.equalsIgnoreCase("R") && !type.equalsIgnoreCase("Q")) {
-			System.out.println("Error: Invalid type for promotion!");
-	        return null;
+	        return promoted;
 		}
 		
 		Position pos = promoted.getChessPosition().toPosition();
